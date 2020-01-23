@@ -220,6 +220,10 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
        
     }
     
+    @IBAction func unwindToContainerVC(segue: UIStoryboardSegue) {
+
+    }
+    
     @IBAction func test(segue: UIStoryboardSegue) {
        guard segue.identifier == "returnToNewPlace" else { return }
        guard let dst = segue.source as? MapViewController else { return }

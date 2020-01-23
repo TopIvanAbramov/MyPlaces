@@ -27,10 +27,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="wJ6-fS-tp1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="250.00000000000006"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1n-VH-ys9">
-                                                    <rect key="frame" x="349" y="185" width="50" height="50"/>
+                                                    <rect key="frame" x="299" y="135" width="100" height="100"/>
                                                     <state key="normal" image="mapicon"/>
                                                     <connections>
                                                         <segue destination="Sbv-yH-cKh" kind="presentation" identifier="showPlace" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="TLj-yI-HOA"/>
@@ -309,7 +309,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4Bu-7L-Etc">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="4Bu-7L-Etc">
                                                             <rect key="frame" x="0.0" y="33" width="177" height="24"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" staticText="YES" adjustable="YES"/>
@@ -514,7 +514,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Vxy-8H-rD7">
-                                <rect key="frame" x="349" y="387" width="50" height="150"/>
+                                <rect key="frame" x="349" y="387" width="50" height="200"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e3s-cJ-0M6">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -549,6 +549,17 @@
                                             <action selector="centerUserLocation" destination="Sbv-yH-cKh" eventType="touchUpInside" id="Lwc-yd-Ttr"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgo-M9-21h">
+                                        <rect key="frame" x="0.0" y="150" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="G13-Qo-8Jq"/>
+                                            <constraint firstAttribute="height" constant="50" id="vE1-78-YwW"/>
+                                        </constraints>
+                                        <state key="normal" image="customRoute"/>
+                                        <connections>
+                                            <action selector="makeRoute:" destination="Sbv-yH-cKh" eventType="touchUpInside" id="Fiu-YW-F7O"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oxi-gM-SHj">
@@ -566,7 +577,7 @@
                                 </constraints>
                                 <state key="normal" image="done"/>
                                 <connections>
-                                    <segue destination="wRc-qt-OVX" kind="unwind" identifier="returnToNewPlace" unwindAction="testWithSegue:" id="DcH-iY-O7Z"/>
+                                    <action selector="doneButtonPresed" destination="Sbv-yH-cKh" eventType="touchUpInside" id="jR0-Es-wQS"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="cGZ-mD-quM">
@@ -579,7 +590,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dS-ze-hoF">
-                                <rect key="frame" x="184" y="406.5" width="46" height="47"/>
+                                <rect key="frame" x="184" y="403.5" width="46" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="FBk-re-veU"/>
                                     <constraint firstAttribute="height" constant="47" id="UId-70-cPH"/>
@@ -599,7 +610,7 @@
                             <constraint firstItem="Ocb-kI-66k" firstAttribute="trailing" secondItem="WRs-JI-3rb" secondAttribute="trailing" id="7g5-Xg-U8O"/>
                             <constraint firstItem="Vxy-8H-rD7" firstAttribute="top" secondItem="oU8-nG-1la" secondAttribute="bottom" constant="288" id="Cns-3b-EhO"/>
                             <constraint firstItem="Oxi-gM-SHj" firstAttribute="leading" secondItem="WRs-JI-3rb" secondAttribute="leading" id="H4h-UO-OoJ"/>
-                            <constraint firstItem="9dS-ze-hoF" firstAttribute="centerY" secondItem="WRs-JI-3rb" secondAttribute="centerY" constant="-23" id="IQX-AO-YTM"/>
+                            <constraint firstItem="9dS-ze-hoF" firstAttribute="centerY" secondItem="WRs-JI-3rb" secondAttribute="centerY" constant="-26" id="IQX-AO-YTM"/>
                             <constraint firstItem="9dS-ze-hoF" firstAttribute="centerX" secondItem="WRs-JI-3rb" secondAttribute="centerX" id="IZg-R4-W9G"/>
                             <constraint firstItem="cGZ-mD-quM" firstAttribute="leading" secondItem="WRs-JI-3rb" secondAttribute="leading" constant="35" id="J2n-Q8-0el"/>
                             <constraint firstAttribute="bottom" secondItem="Ocb-kI-66k" secondAttribute="bottom" id="KTy-La-qY4"/>
@@ -616,6 +627,8 @@
                         <outlet property="footer" destination="Oxi-gM-SHj" id="tXd-tV-gU9"/>
                         <outlet property="map" destination="Ocb-kI-66k" id="FWA-1D-tvF"/>
                         <outlet property="pin" destination="9dS-ze-hoF" id="Dpe-d9-K3l"/>
+                        <outlet property="route" destination="dgo-M9-21h" id="yph-oW-m1c"/>
+                        <segue destination="wRc-qt-OVX" kind="unwind" identifier="test" unwindAction="unwindToContainerVCWithSegue:" id="A0y-K6-zlF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="smz-U1-LYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -632,13 +645,14 @@
         <image name="customMinus" width="25" height="25"/>
         <image name="customPin" width="256" height="256"/>
         <image name="customPlus" width="25" height="25"/>
+        <image name="customRoute" width="50" height="50"/>
         <image name="done" width="128" height="128"/>
         <image name="mapicon" width="50" height="50"/>
         <image name="plus" catalog="system" width="64" height="56"/>
         <image name="star" catalog="system" width="64" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TLj-yI-HOA"/>
+        <segue reference="Mrg-43-9Sm"/>
         <segue reference="4ET-YN-Fcc"/>
     </inferredMetricsTieBreakers>
 </document>

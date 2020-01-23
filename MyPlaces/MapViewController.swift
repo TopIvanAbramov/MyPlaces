@@ -17,9 +17,10 @@ class MapViewController: UIViewController {
         //map.mapType = .mutedStandard
         map.delegate = self
         map.showsScale = true
+        route.isHidden = true
+        map.showsCompass = false
         setupMapView()
         checkLocationServices()
-        map.showsCompass = false
     }
     
     var place = Place()
@@ -29,22 +30,30 @@ class MapViewController: UIViewController {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var footer: UIImageView!
     @IBOutlet weak var address: UILabel!
+    @IBOutlet weak var route: UIButton!
     var currentScale = 1000
-    
+    var placeLocation : CLPlacemark?
+
     @IBAction func scale(_ sender: UIButton) {
         let location = map.centerCoordinate
+        print("\(map.region.span.longitudeDelta)")
         if sender.tag == 0 {
-            if currentScale - 500 <= 0 {
-                return
+            
+            let span : MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: map.region.span.latitudeDelta * 0.8,
+                                                           longitudeDelta: map.region.span.longitudeDelta * 0.8)
+            let regions = MKCoordinateRegion(center: location, span : span)
+            DispatchQueue.main.async {
+                self.map.setRegion(self.map.regionThatFits(regions), animated: true)
             }
-            currentScale -= 500
-            let regions = MKCoordinateRegion(center: location, latitudinalMeters: CLLocationDistance(exactly: currentScale)!, longitudinalMeters: CLLocationDistance(exactly: currentScale)!)
-            map.setRegion(map.regionThatFits(regions), animated: true)
         }
         else {
-            currentScale += 500
-            let regions = MKCoordinateRegion(center: location, latitudinalMeters: CLLocationDistance(exactly: currentScale)!, longitudinalMeters: CLLocationDistance(exactly: currentScale)!)
-            map.setRegion(map.regionThatFits(regions), animated: true)
+            //currentScale += 500
+            let span : MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: map.region.span.latitudeDelta * 1.2,
+                                                           longitudeDelta: map.region.span.longitudeDelta * 1.2)
+            let regions = MKCoordinateRegion(center: location, span : span)
+            DispatchQueue.main.async {
+                self.map.setRegion(self.map.regionThatFits(regions), animated: true)
+            }
         }
         
         
@@ -83,6 +92,7 @@ class MapViewController: UIViewController {
             
             guard let placemarks = placemarks else { return }
             let placemark = placemarks.first
+            self.placeLocation = placemark
             
             let annotation = MKPointAnnotation()
             annotation.title = self.place.name
@@ -157,6 +167,7 @@ extension MapViewController : MKMapViewDelegate {
             address.isHidden = true
             footer.isHidden = true
             pin.isHidden = true
+            route.isHidden = false
         }
     }
     
@@ -213,10 +224,14 @@ extension MapViewController : MKMapViewDelegate {
                     let firstLocation = placemarks?[0]
                     if let street = firstLocation?.thoroughfare {
                         if let buildingNumber = firstLocation?.subThoroughfare {
-                            self.address.text =  "\(street), \(buildingNumber)"
+                            DispatchQueue.main.async {
+                                self.address.text =  "\(street), \(buildingNumber)"
+                            }
                         }
                         else {
-                            self.address.text =  "\(street)"
+                            DispatchQueue.main.async {
+                                self.address.text =  "\(street)"
+                            }
                         }
                     }
                     else {
@@ -236,6 +251,69 @@ extension MapViewController : MKMapViewDelegate {
         let zoomFactor = Int(log2(zoomWidth)) - 9
         currentScale = zoomFactor
     }
+    
+    @IBAction func makeRoute(_ sender: UIButton) {
+        requestRoute()
+    }
+    
+    func  requestRoute() {
+        let request = MKDirections.Request()
+        
+        guard let source = locationManager.location?.coordinate else { return }
+        guard let destination = placeLocation?.location?.coordinate else { return }
+        
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil))
+        request.requestsAlternateRoutes = true
+        request.transportType = .automobile
+
+        let directions = MKDirections(request: request)
+
+        directions.calculate { [unowned self] response, error in
+            guard let unwrappedResponse = response else {
+                self.showAlert(title: "Error", message: "Cannot get directionions!")
+                return
+                
+            }
+
+            for route in unwrappedResponse.routes {
+                self.map.addOverlay(route.polyline)
+                self.map.setVisibleMapRect(route.polyline.boundingMapRect.insetBy(dx: -800000, dy: -800000), animated: true)
+                
+                let distance = String(format: "%1.f",  route.distance / 1000)
+                let timeTravel = String(format: "%1.f", route.expectedTravelTime / 3600 )
+                
+                self.address.isHidden = false
+                self.address.isHighlighted = true
+                self.address.textAlignment = .right
+                self.address.textColor = .blue
+                self.footer.isHidden = false
+                self.doneButton.isHidden = false
+                
+                self.address.text = "Distance: \(distance) km\nTime travel: \(timeTravel) hours"
+            }
+        }
+    }
+    
+    @IBAction func doneButtonPresed() {
+        if incomeSegueIdentifier == "showPlace" {
+            guard let destination = placeLocation?.location?.coordinate else { return }
+                       
+            let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: destination, addressDictionary:nil))
+            mapItem.name = "\(self.place.name)"
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        }
+        else {
+            performSegue(withIdentifier: "test", sender: self)
+        }
+
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+           let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+           renderer.strokeColor = UIColor.blue
+           return renderer
+       }
 }
 
  
