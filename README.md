@@ -18,6 +18,6 @@ Simple cofe & restaurants agregator
 ![](https://github.com/TopIvanAbramov/MyPlaces/blob/master/AppImages/app%20Demo.gif)
 
 
-### Pages
+### Main pages
 
 ![](https://github.com/TopIvanAbramov/MyPlaces/blob/master/AppImages/collage.jpg)
