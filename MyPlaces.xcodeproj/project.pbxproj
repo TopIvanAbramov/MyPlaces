@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2CAD366223CB394A00CCFC53 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD366123CB394A00CCFC53 /* MapViewController.swift */; };
-		8B9DAF42F91ECB0D47E8A3DB /* Pods_MyPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 733859ED947291EC14E99950 /* Pods_MyPlaces.framework */; };
+		713F60AA2FFCAD1BE4BAA991 /* Pods_MyPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 733859ED947291EC14E99950 /* Pods_MyPlaces.framework */; };
 		A82E5BE521A5315800BD5158 /* NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82E5BE421A5315800BD5158 /* NewPlaceViewController.swift */; };
 		A895AEC921934CA7006ACC1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A895AEC821934CA7006ACC1B /* AppDelegate.swift */; };
 		A895AECE21934CA7006ACC1B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A895AECC21934CA7006ACC1B /* Main.storyboard */; };
@@ -21,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C231A3C2450D42600A32321 /* MyPlaces.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyPlaces.entitlements; sourceTree = "<group>"; };
 		2CAD366123CB394A00CCFC53 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		3FE30A28997B9A1FB13D9B2C /* Pods-MyPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlaces.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyPlaces/Pods-MyPlaces.release.xcconfig"; sourceTree = "<group>"; };
 		733859ED947291EC14E99950 /* Pods_MyPlaces.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPlaces.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,13 +44,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B9DAF42F91ECB0D47E8A3DB /* Pods_MyPlaces.framework in Frameworks */,
+				713F60AA2FFCAD1BE4BAA991 /* Pods_MyPlaces.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C2C6E142450C7EF0016D9CC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A8DB6864219DA4BE00CD36D5 /* PlaceModel.swift */,
+				A8F6604921BA599700C724FD /* StorageManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2C2C6E152450CA020016D9CC /* ViewControlllers */ = {
+			isa = PBXGroup;
+			children = (
+				A895AEDA21934D16006ACC1B /* MainViewController.swift */,
+				2CAD366123CB394A00CCFC53 /* MapViewController.swift */,
+				A82E5BE421A5315800BD5158 /* NewPlaceViewController.swift */,
+			);
+			path = ViewControlllers;
+			sourceTree = "<group>";
+		};
 		A3E62A2428117415D511FF13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +99,10 @@
 		A895AEC721934CA7006ACC1B /* MyPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				2C231A3C2450D42600A32321 /* MyPlaces.entitlements */,
 				A895AEC821934CA7006ACC1B /* AppDelegate.swift */,
-				A895AEDA21934D16006ACC1B /* MainViewController.swift */,
-				A82E5BE421A5315800BD5158 /* NewPlaceViewController.swift */,
-				2CAD366123CB394A00CCFC53 /* MapViewController.swift */,
-				A8DB6864219DA4BE00CD36D5 /* PlaceModel.swift */,
-				A8F6604921BA599700C724FD /* StorageManager.swift */,
+				2C2C6E152450CA020016D9CC /* ViewControlllers */,
+				2C2C6E142450C7EF0016D9CC /* Models */,
 				A8DB681F219BDB0700CD36D5 /* CustomTableViewCell.swift */,
 				A895AECC21934CA7006ACC1B /* Main.storyboard */,
 				A895AECF21934CA8006ACC1B /* Assets.xcassets */,
@@ -133,7 +151,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = "Alexey Efimov";
+				ORGANIZATIONNAME = "Ivan Abramov";
 				TargetAttributes = {
 					A895AEC421934CA7006ACC1B = {
 						CreatedOnToolsVersion = 10.1;
@@ -142,7 +160,7 @@
 				};
 			};
 			buildConfigurationList = A895AEC021934CA7006ACC1B /* Build configuration list for PBXProject "MyPlaces" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -368,16 +386,19 @@
 			baseConfigurationReference = 95EBA851E462D757B85991E0 /* Pods-MyPlaces.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MyPlaces/MyPlaces.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K9N82GAG49;
+				DEVELOPMENT_TEAM = 3P79KQK9SU;
 				INFOPLIST_FILE = MyPlaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.swiftbook.FindFood;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.IvanAbramov.FindFoood;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -388,16 +409,19 @@
 			baseConfigurationReference = 3FE30A28997B9A1FB13D9B2C /* Pods-MyPlaces.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MyPlaces/MyPlaces.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K9N82GAG49;
+				DEVELOPMENT_TEAM = 3P79KQK9SU;
 				INFOPLIST_FILE = MyPlaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.swiftbook.FindFood;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.IvanAbramov.FindFoood;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

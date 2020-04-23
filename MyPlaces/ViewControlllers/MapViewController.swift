@@ -26,39 +26,39 @@ class MapViewController: UIViewController {
     var place = Place()
     let annotationidentifier = "annotationidentifier"
     var incomeSegueIdentifier = ""
+    var currentScale = 1000
+    var placeLocation : CLPlacemark?
+    let locationManager = CLLocationManager()
+    
+    @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var pin: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var footer: UIImageView!
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var route: UIButton!
-    var currentScale = 1000
-    var placeLocation : CLPlacemark?
+    
 
-    @IBAction func scale(_ sender: UIButton) {
-        let location = map.centerCoordinate
-        print("\(map.region.span.longitudeDelta)")
+    @IBAction func scaleButtonPressed(_ sender: UIButton) {
+        //print("\(map.region.span.longitudeDelta)")
         if sender.tag == 0 {
-            
-            let span : MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: map.region.span.latitudeDelta * 0.8,
-                                                           longitudeDelta: map.region.span.longitudeDelta * 0.8)
-            let regions = MKCoordinateRegion(center: location, span : span)
-            DispatchQueue.main.async {
-                self.map.setRegion(self.map.regionThatFits(regions), animated: true)
-            }
+            scale(zoomIn: true)
         }
         else {
-            //currentScale += 500
-            let span : MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: map.region.span.latitudeDelta * 1.2,
-                                                           longitudeDelta: map.region.span.longitudeDelta * 1.2)
-            let regions = MKCoordinateRegion(center: location, span : span)
-            DispatchQueue.main.async {
-                self.map.setRegion(self.map.regionThatFits(regions), animated: true)
-            }
+            scale(zoomIn: false)
         }
-        
-        
     }
     
+    func scale(zoomIn : Bool) {
+        let scaleConstant = zoomIn ? 0.8 : 1.2
+        let location = map.centerCoordinate
+        
+        let span : MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: map.region.span.latitudeDelta * scaleConstant,
+                                                       longitudeDelta: map.region.span.longitudeDelta * scaleConstant)
+        let regions = MKCoordinateRegion(center: location, span : span)
+        DispatchQueue.main.async {
+            self.map.setRegion(self.map.regionThatFits(regions), animated: true)
+        }
+    }
     
     @IBAction func centerUserLocation() {
         showUserLocation()
@@ -77,8 +77,6 @@ class MapViewController: UIViewController {
         dismiss(animated: true)
     }
  
-    @IBOutlet weak var map: MKMapView!
-    let locationManager = CLLocationManager()
     
     private func setupPlacemark() {
         guard let location = place.location else { return }
@@ -214,6 +212,7 @@ extension MapViewController : MKMapViewDelegate {
         setAddress(to: location)
     }
     
+    
     func setAddress(to location : CLLocation) {
         let geocoder = CLGeocoder()
                 
@@ -255,6 +254,7 @@ extension MapViewController : MKMapViewDelegate {
     @IBAction func makeRoute(_ sender: UIButton) {
         requestRoute()
     }
+    
     
     func  requestRoute() {
         let request = MKDirections.Request()
@@ -304,7 +304,8 @@ extension MapViewController : MKMapViewDelegate {
             mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
         }
         else {
-            performSegue(withIdentifier: "test", sender: self)
+            print("Address", address.text)
+            performSegue(withIdentifier: "returnToNewPlace", sender: self)
         }
 
     }
