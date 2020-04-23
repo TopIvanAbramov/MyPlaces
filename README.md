@@ -15,7 +15,7 @@ Simple cofe & restaurants agregator
 -MapKit
 
 
-![](https://github.com/TopIvanAbramov/MyPlaces/blob/master/AppImages/MyPlaces.gif)
+![](https://github.com/TopIvanAbramov/MyPlaces/blob/master/AppImages/app%20Demo.gif)
 
 
 ### Pages
