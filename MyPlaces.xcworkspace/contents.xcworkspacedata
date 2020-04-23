@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/ivan/Desktop/MyPlaces/AppImages">
+   </FileRef>
+   <FileRef
       location = "absolute:MyPlaces.xcodeproj">
    </FileRef>
    <FileRef
