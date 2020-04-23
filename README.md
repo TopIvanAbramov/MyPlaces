@@ -5,13 +5,13 @@ Simple cofe & restaurants agregator
 
 -Add & detele & edit places\
 -Sort by rating/name\
--Search by name of place, geoposition\
+-Search by name of place, geoposition
 
 ### Technology stack
 
--Swift
--Realm db
--AutoLayout и Storyboard
+-Swift\
+-Realm db\
+-AutoLayout и Storyboard\
 -MapKit
 
 
